@@ -5,17 +5,15 @@ var settings = require('./config.js'),
     REDIS_URL = settings.REDIS_URL;
 
 var parsers = require('./parsers/parser.js');
+		// Set up connection to Redis
+var redis;
+if (REDIS_URL) {
+	redis = require('redis').createClient(REDIS_URL);
+} else {
+	redis = require('redis').createClient();
+}
 
 (function() {
-
-
-		// Set up connection to Redis
-		var redis;
-		if (REDIS_URL) {
-		  redis = require('redis').createClient(REDIS_URL);
-		} else {
-		  redis = require('redis').createClient();
-		}
 
 		redis.subscribe("tweets");
 
