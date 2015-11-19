@@ -1,0 +1,25 @@
+env: development
+
+http:
+  enable: true
+  host: 'localhost'
+  port: 5000
+
+https:
+  enable: false
+  port: 5001
+  key: key.pem
+  cert: certificate.pem
+
+twitter:
+	TWITTER_CONSUMER_KEY: 'iT89fJH1FSKIwcY344IvMAl6E'
+	TWITTER_CONSUMER_SECRET: 'Vw3cedAH9LYgFpTbjl2DeyDg4sKwzCcoHofJ8IXCDYtmPQ8Tai'
+	TWITTER_ACCESS_TOKEN_KEY: '1054546747-F6oSvDzm0b1SiO3cGLSJ2dcHBnbzGkuM1ojFiB9'
+	TWITTER_ACCESS_TOKEN_SECRET: 'GNzZA35JjpQHr9B5jyGi2uL3ri7AaEoRtufOkee7s2vRp'
+
+instamojo:
+	INSTAMOJO_API_KEY: 'a828edcaf75e5da3ce9582d05a5585c7'
+	INSTAMOJO_AUTH_TOKEN: 'aef0907120c9fa7f53b7c6de98e4e84c'
+
+database:
+	REDIS_URL: 'http://localhost:6379'
