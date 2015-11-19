@@ -19,9 +19,5 @@ app.use(morgan('combined'));
 // Compress responses
 app.use(compression());
 
-// Listen
-var io = require('socket.io')({
-}).listen(app.listen(port));
-
 console.log("Listening on port " + port);
 // Handle connections

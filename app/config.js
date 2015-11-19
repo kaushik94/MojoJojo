@@ -75,8 +75,9 @@ var pipeline = [
 
     function herokuDbUrl(context) {
         // Override database URI - if using a Heroku add-on
+        // console.log(context.result);
         if (process.env.REDIS_URL) {
-            context.result.database.url = process.env.REDIS_URL;
+            context.result.REDIS_URL = process.env.REDIS_URL;
         }
     }
 
