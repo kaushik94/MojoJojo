@@ -79,6 +79,18 @@ var pipeline = [
         if (process.env.REDIS_URL) {
             context.result.REDIS_URL = process.env.REDIS_URL;
         }
+    },
+
+    function overrideInstamojoSetting(context){
+        if(process.env.INSTAMOJO_URL){
+            context.result.INSTAMOJO_URL = process.env.INSTAMOJO_URL;
+        }
+        if(process.env.INSTAMOJO_API_KEY){
+            context.result.INSTAMOJO_API_KEY = process.env.INSTAMOJO_API_KEY;
+        }
+        if(process.env.INSTAMOJO_AUTH_TOKEN){
+            context.result.INSTAMOJO_AUTH_TOKEN = process.env.INSTAMOJO_AUTH_TOKEN;
+        }
     }
 
 ];
