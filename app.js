@@ -1,23 +1,23 @@
 /*jslint node: true */
 'use strict';
-// require('babel/register');
-// Get dependencies
+
 var settings = require('./app/config'),
     REDIS_URL = settings.REDIS_URL,
     port = settings.http.port;
 
 var express = require('express'),
     app = express(),
-  	compression = require('compression'),
-  	morgan = require('morgan'),
-    worker = require('./app/worker'),
-    pusher = require('./app/pusher');
+    fs = require('fs');
 
-// Set up logging
-app.use(morgan('combined'));
+var worker = require('./app/worker'),
+    pusher = require('./app/pusher'),
+    logger = require('./logger');
 
-// Compress responses
-app.use(compression());
+logger.info("Listening on port " + port);
 
-console.log("Listening on port " + port);
-// Handle connections
+var message = "Text Books for children illustrating cartoons, costs 1 $ a piece"
+var parsers = require('./app/parsers/parsers');
+var senders = require('./app/middleware/senders');
+parsers.instamojo(message, function(result){
+	logger.debug(result);
+});

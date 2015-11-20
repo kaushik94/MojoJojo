@@ -18,6 +18,7 @@ twitter:
 	TWITTER_ACCESS_TOKEN_SECRET: 'GNzZA35JjpQHr9B5jyGi2uL3ri7AaEoRtufOkee7s2vRp'
 
 instamojo:
+	INSTAMOJO_URL: 'https://www.instamojo.com/api/1.1/links/'
 	INSTAMOJO_API_KEY: 'a828edcaf75e5da3ce9582d05a5585c7'
 	INSTAMOJO_AUTH_TOKEN: 'aef0907120c9fa7f53b7c6de98e4e84c'
 

@@ -2,6 +2,7 @@
 
 // Get dependencies
 var Twitter = require('twitter');
+
 var settings = require('./config'),
     TWITTER_CONSUMER_KEY = settings.TWITTER_CONSUMER_KEY,
     TWITTER_CONSUMER_SECRET = settings.TWITTER_CONSUMER_SECRET,
@@ -19,7 +20,6 @@ var client = new Twitter({
 
 // Set up connection to Redis
 var redis;
-console.log(REDIS_URL);
 if (REDIS_URL) {
   redis = require('redis').createClient(REDIS_URL);
 } else {
@@ -29,14 +29,9 @@ if (REDIS_URL) {
 client.stream('statuses/filter', {track: 'javascript', lang: 'en'}, function(stream) {
   
   stream.on('data', function(tweet) {
-    // Log it to console
-    // console.log(tweet.text);
-    // Publish it
     redis.publish('tweets', tweet.text);
-    // Persist it to a Redis list
     redis.rpush('stream:tweets', tweet.text);
   });
-  // Handle errors
   stream.on('error', function (error) {
     console.log(error);
   });
