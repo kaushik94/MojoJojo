@@ -26,10 +26,11 @@ var pusher = (function() {
 
 		redis.on("message", function(channel, message){
 		  // pops off new item
+		  console.log(message);
 		  parsers.instamojo(message, function(result){
 		  		senders.instamojo(result, function(res){
-		  			logger.debug(res);
-		  			logger.debug(result);	
+		  			console.log(res);
+		  			logger.log(result);	
 		  		});
 		  });
 

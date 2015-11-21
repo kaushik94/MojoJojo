@@ -15,7 +15,7 @@ var worker = require('./app/worker'),
     logger = require('./logger');
 
 var params = {
-	screen_name: 'the_AMAlive'
+	track: '@instamojojo'
 };
 
 requirejs.config({

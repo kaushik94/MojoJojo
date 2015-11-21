@@ -52,7 +52,7 @@ describe('Parsers', function() {
   ];
 
   tweets.forEach(function(test) {
-    it('parsing the tweet: '+test.tweet+'  \n got: '+JSON.stringify(test.expected), function(done) {
+    it('parsing the tweet: '+test.tweet+'\n got: '+JSON.stringify(test.expected), function(done) {
 		parsers.instamojo(test.tweet, function(result){
 			assert(_.isEqual(result, test.expected));
 			done();

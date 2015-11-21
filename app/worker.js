@@ -40,11 +40,10 @@ var redis;
 var worker = (function(){
 
     var _collect = function(params){
-      client.get('statuses/user_timeline', params, function(err, stream, res) {
-        
-        _.forEach(stream, function(tweet) {
-            redis.publish('tweets', tweet.text);
-            redis.rpush('stream:tweets', tweet.text);
+      client.stream('statuses/filter', params, function(stream) {
+        stream.on('data', function(tweet) {
+          redis.publish('tweets', tweet.text);
+          redis.rpush('stream:tweets', tweet.text);
         });
 
       });

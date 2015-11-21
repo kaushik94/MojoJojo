@@ -1,1 +1,3 @@
 node_modules/*
+settings.sample.yml
+dump.rdb
