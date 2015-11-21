@@ -1,7 +1,8 @@
 'use strict';
 
 // Get dependencies
-var Twitter = require('twitter');
+var Twitter = require('twitter'),
+    _ = require('lodash');
 
 var settings = require('./config'),
     TWITTER_CONSUMER_KEY = settings.TWITTER_CONSUMER_KEY,
@@ -18,22 +19,41 @@ var client = new Twitter({
   access_token_secret: TWITTER_ACCESS_TOKEN_SECRET
 });
 
-// Set up connection to Redis
-var redis;
-if (REDIS_URL) {
-  redis = require('redis').createClient(REDIS_URL);
-} else {
-  redis = require('redis').createClient();
-}
+var worker = (function(){
 
-client.stream('statuses/filter', {track: 'javascript', lang: 'en'}, function(stream) {
-  
-  stream.on('data', function(tweet) {
-    redis.publish('tweets', tweet.text);
-    redis.rpush('stream:tweets', tweet.text);
-  });
-  stream.on('error', function (error) {
-    console.log(error);
-  });
+    // Set up connection to Redis
+    var redis;
+    var connect = function(){
+      if (REDIS_URL) {
+        redis = require('redis').createClient(REDIS_URL);
+      } else {
+        redis = require('redis').createClient();
+      }
+    };
 
-});
+    var _collect = function(params){
+      client.get('statuses/user_timeline', params, function(err, stream, res) {
+        
+        _.forEach(stream, function(tweet) {
+          console.log(tweet);
+          redis.publish('tweets', tweet.text);
+          redis.rpush('stream:tweets', tweet.text);
+        });
+
+      });
+    };
+
+    var collect = function(params){
+
+      setTimeout(_collect(params), 30000);
+
+    };
+
+    return {
+      connect,
+      collect
+    };
+
+})();
+
+module.exports = worker;

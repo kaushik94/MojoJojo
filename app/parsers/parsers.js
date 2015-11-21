@@ -36,15 +36,15 @@ var parsers = (function(){
 			var currency = isCurrency(n);
 			if(currency){
 				result.currency = currency;
-				if(result.cost)
+				if(result.base_price)
 					callback(null, text, result);
 				var approx = words.indexOf(currency);
 				if(words[approx+1] && isCost(words[approx+1])){
-					result.cost = words[approx+1];
+					result.base_price = words[approx+1];
 					callback(null, text, result)
 				}
 				if(words[approx-1] && isCost(words[approx-1])){
-					result.cost = words[approx-1];
+					result.base_price = words[approx-1];
 					callback(null, text, result);
 				}
 			}
@@ -66,7 +66,7 @@ var parsers = (function(){
 			cost = words.indexOf("cost");
 		if(costs){
 			if(words[costs+1] && isCost(words[costs+1])){
-				result.cost = words[costs+1];
+				result.base_price = words[costs+1];
 			}
 			if(words[costs-1]){
 				if(_.contains(
@@ -79,7 +79,7 @@ var parsers = (function(){
 		}
 		if(cost){
 			if(words[costs+1] && isCost(words[costs+1])){
-				result.cost = words[cost+1];
+				result.base_price = words[cost+1];
 			}
 			words.splice(cost, 1);
 		}
@@ -115,7 +115,7 @@ var parsers = (function(){
 		var result = {
 			title: '',
 			description: '',
-			cost: '',
+			base_price: '',
 			currency: ''
 		};
 

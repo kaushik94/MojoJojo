@@ -13,11 +13,14 @@ var worker = require('./app/worker'),
     pusher = require('./app/pusher'),
     logger = require('./logger');
 
-logger.info("Listening on port " + port);
+var params = {
+	screen_name: 'the_AMAlive'
+};
 
-var message = "Text Books for children illustrating cartoons, costs 1 $ a piece"
-var parsers = require('./app/parsers/parsers');
-var senders = require('./app/middleware/senders');
-parsers.instamojo(message, function(result){
-	logger.debug(result);
-});
+worker.connect();
+worker.collect(params);
+
+pusher.connect();
+pusher.push();
+
+logger.info("Listening on port " + port);

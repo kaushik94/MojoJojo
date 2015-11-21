@@ -6,36 +6,41 @@ var settings = require('./config'),
 
 var parsers = require('./parsers/parsers'),
 	senders = require('./middleware/senders');
-//	logger = require('./logger');
 
-// Set up connection to Redis
-var redis;
-if (REDIS_URL) {
-	redis = require('redis').createClient(REDIS_URL);
-} else {
-	redis = require('redis').createClient();
-}
 
-var form = {
-	"title": "HELLO WORLD",
-	"base_price": "50.00",
-	"currency": "INR",
-	"description": "This is an example link."
-};
+var pusher = (function() {
 
-(function() {
+	// Set up connection to Redis
+	var redis;
+	
+	var connect = function(){
+		if (REDIS_URL) {
+			redis = require('redis').createClient(REDIS_URL);
+		} else {
+			redis = require('redis').createClient();
+		}
+	};
 
+	var push = function(){
 		redis.subscribe("tweets");
 
 		redis.on("message", function(channel, message){
 		  // pops off new item
 		  parsers.instamojo(message, function(result){
 		  		senders.instamojo(result, function(res){
-		  			// logger.debug(res);
-		  			console.log(res);	
+		  			logger.debug(res);
+		  			logger.debug(result);	
 		  		});
 		  });
 
 		});
+	};
+
+	return {
+		connect,
+		push
+	};
 
 })();
+
+module.exports = pusher;
