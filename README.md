@@ -4,6 +4,9 @@
 ```
 $ git clone https://github.com/kaushik94/instamojo-jojo
 $ cd instamojo-jojo && npm install
+```
+Edit the `settings.yml` file appropriately.
+```
 $ npm test
 $ npm start
 ```
