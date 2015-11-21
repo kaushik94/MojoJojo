@@ -7,19 +7,19 @@ var settings = require('./config'),
 var parsers = require('./parsers/parsers'),
 	senders = require('./middleware/senders');
 
+// Set up connection to Redis
+var redis;
+(function(){
+
+	if (REDIS_URL) {
+		redis = require('redis').createClient(REDIS_URL);
+	} else {
+		redis = require('redis').createClient();
+	}
+
+})();
 
 var pusher = (function() {
-
-	// Set up connection to Redis
-	var redis;
-	
-	var connect = function(){
-		if (REDIS_URL) {
-			redis = require('redis').createClient(REDIS_URL);
-		} else {
-			redis = require('redis').createClient();
-		}
-	};
 
 	var push = function(){
 		redis.subscribe("tweets");
@@ -37,7 +37,6 @@ var pusher = (function() {
 	};
 
 	return {
-		connect,
 		push
 	};
 

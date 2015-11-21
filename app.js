@@ -7,7 +7,8 @@ var settings = require('./app/config'),
 
 var express = require('express'),
     app = express(),
-    fs = require('fs');
+    fs = require('fs'),
+    requirejs = require('requirejs');
 
 var worker = require('./app/worker'),
     pusher = require('./app/pusher'),
@@ -17,10 +18,13 @@ var params = {
 	screen_name: 'the_AMAlive'
 };
 
-worker.connect();
+requirejs.config({
+	baseUrl: __dirname,
+	nodeRequire: require
+});
+
 worker.collect(params);
 
-pusher.connect();
 pusher.push();
 
 logger.info("Listening on port " + port);

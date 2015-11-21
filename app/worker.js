@@ -4,6 +4,12 @@
 var Twitter = require('twitter'),
     _ = require('lodash');
 
+// Fetches tweets in this interval(15 mins)
+// This is the official twitter rate limit
+// for their REST API.
+// https://dev.twitter.com/rest/public/rate-limiting
+var TIMEOUT = 15*60;
+
 var settings = require('./config'),
     TWITTER_CONSUMER_KEY = settings.TWITTER_CONSUMER_KEY,
     TWITTER_CONSUMER_SECRET = settings.TWITTER_CONSUMER_SECRET,
@@ -19,38 +25,36 @@ var client = new Twitter({
   access_token_secret: TWITTER_ACCESS_TOKEN_SECRET
 });
 
-var worker = (function(){
+// Set up connection to Redis
+var redis;
+(function(){
 
-    // Set up connection to Redis
-    var redis;
-    var connect = function(){
-      if (REDIS_URL) {
-        redis = require('redis').createClient(REDIS_URL);
-      } else {
-        redis = require('redis').createClient();
-      }
-    };
+  if (REDIS_URL) {
+    redis = require('redis').createClient(REDIS_URL);
+  } else {
+    redis = require('redis').createClient();
+  }
+
+})();
+
+var worker = (function(){
 
     var _collect = function(params){
       client.get('statuses/user_timeline', params, function(err, stream, res) {
         
         _.forEach(stream, function(tweet) {
-          console.log(tweet);
-          redis.publish('tweets', tweet.text);
-          redis.rpush('stream:tweets', tweet.text);
+            redis.publish('tweets', tweet.text);
+            redis.rpush('stream:tweets', tweet.text);
         });
 
       });
     };
 
     var collect = function(params){
-
       setTimeout(_collect(params), 30000);
-
     };
 
     return {
-      connect,
       collect
     };
 

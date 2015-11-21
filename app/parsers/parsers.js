@@ -14,9 +14,15 @@ var parsers = (function(){
 
 
 	var normalize = function(text, result, callback){
-		// remove @someone
-		// remove hashtags
-		callback(null, text, result);
+		var toRemove = [];
+		toRemove = twitter_text.extractMentions(text) // remove @mentions
+		toRemove.push(twitter_text.extractHashtags(text)); // remove #hashtags
+		toRemove.push(twitter_text.extractUrls(text));// remove Urls
+		toRemove.forEach(function(element, index, array){
+			text.replace(element, '');
+			if(index === array.length -1)
+				callback(null, text, result);
+		});
 	};
 
 	var isCost = function(value){
