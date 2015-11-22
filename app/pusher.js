@@ -30,7 +30,7 @@ var pusher = (function() {
 		  parsers.instamojo(message, function(result){
 		  		senders.instamojo(result, function(res){
 		  			console.log(res);
-		  			logger.log(result);	
+		  			console.log(result);	
 		  		});
 		  });
 

@@ -39,7 +39,7 @@ var redis;
 
 var worker = (function(){
 
-    var _collect = function(params){
+    var collect = function(params){
       client.stream('statuses/filter', params, function(stream) {
         stream.on('data', function(tweet) {
           redis.publish('tweets', tweet.text);
@@ -47,10 +47,6 @@ var worker = (function(){
         });
 
       });
-    };
-
-    var collect = function(params){
-      setTimeout(_collect(params), 30000);
     };
 
     return {
