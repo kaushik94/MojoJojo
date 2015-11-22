@@ -9,15 +9,12 @@ var parsers = require('./parsers/parsers'),
 
 // Set up connection to Redis
 var redis;
-(function(){
 
-	if (REDIS_URL) {
-		redis = require('redis').createClient(REDIS_URL);
-	} else {
-		redis = require('redis').createClient();
-	}
-
-})();
+if (REDIS_URL) {
+	redis = require('redis').createClient(REDIS_URL);
+} else {
+	redis = require('redis').createClient();
+}
 
 var pusher = (function() {
 
