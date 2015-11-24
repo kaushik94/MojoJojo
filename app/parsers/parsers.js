@@ -10,6 +10,20 @@ var contents = fs.readFileSync("./currencies.json"),
  	currencies = JSON.parse(contents),
 	defaultCurrency = "INR";
 
+
+/*
+ * Takes tweet text as an input applies a parser and
+ * returns a JSON document. For example Instamojo parser
+ * returns JSON of the format
+ *
+ * {
+ *		title: '',
+ *		base_price: '',
+ *		description: '',
+ *		INR: ''	
+ * }
+ *
+ */
 var parsers = (function(){
 
 

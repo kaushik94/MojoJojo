@@ -23,11 +23,13 @@ requirejs.config({
 	nodeRequire: require
 });
 
+// Start collecting tweets
 worker.collect(params);
 
+// Initiate the pusher
 pusher.push();
 
-app.set('port', (process.env.PORT || 5000));
+app.set('port', settings.http.port);
 
 //For avoidong Heroku $PORT error
 app.get('/', function(request, response) {

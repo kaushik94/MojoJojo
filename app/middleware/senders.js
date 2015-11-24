@@ -10,6 +10,7 @@ var url = settings.INSTAMOJO_URL,
 	    'X-Auth-Token': settings.INSTAMOJO_AUTH_TOKEN
   	};
 
+// A wrapper to post data to instamojo
 var connections = (function(){
 
 	var instamojo = function(json, callback){

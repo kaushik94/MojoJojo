@@ -4,6 +4,13 @@ var _ = require('lodash'),
     fs = require('fs'),
     yaml = require('js-yaml');
 
+/*
+ * This will fetch configuration settings from
+ * settings.yml file. Incase these conflict with
+ * the process.env settings like in case of Heroku
+ * we go with the process.env settings.
+ */
+
 function parseEnvValue(value, isArray) {
     value = value.trim();
     if (isArray) {

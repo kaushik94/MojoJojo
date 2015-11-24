@@ -4,10 +4,6 @@
 var Twitter = require('twitter'),
     _ = require('lodash');
 
-// Fetches tweets in this interval(15 mins)
-// This is the official twitter rate limit
-// for their REST API.
-// https://dev.twitter.com/rest/public/rate-limiting
 var TIMEOUT = 15*60;
 
 var settings = require('./config'),
@@ -33,6 +29,12 @@ if (REDIS_URL) {
   redis = require('redis').createClient();
 }
 
+
+
+/*
+ * This works on the twitter streaming API
+ * As we get tweets, push them into the redis db
+ */
 var worker = (function(){
 
     var collect = function(params){
