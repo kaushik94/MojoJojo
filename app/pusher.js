@@ -5,7 +5,7 @@ var settings = require('./config'),
     REDIS_URL = settings.REDIS_URL;
 
 var parsers = require('./parsers/parsers'),
-	senders = require('./middleware/senders');
+    senders = require('./middleware/senders');
 
 // Set up connection to Redis
 var redis;
