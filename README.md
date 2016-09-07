@@ -1,5 +1,5 @@
 # MojoJojo
-## An app that posts twitter data to instamojo API
+## An app that creates instamojo payment links from simple tweets
 ### Local Installation
 ```
 $ git clone https://github.com/kaushik94/instamojo-jojo
